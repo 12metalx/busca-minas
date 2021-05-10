@@ -1,10 +1,10 @@
-import { useState } from "react"
 
 interface Props{
     setSettingsView: (flag:boolean) => void;
     settingsView:boolean;
     setHelpView: (flag:boolean) => void;
     helpView:boolean;
+    
 }
 const Controls = ({setSettingsView,settingsView,setHelpView,helpView}:Props) => {
     const showSettings = () => {
