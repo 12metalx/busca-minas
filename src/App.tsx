@@ -7,7 +7,7 @@ import Settings from "./modules/Settings"
 
 interface Cell{
     state:number;
-    outbreaks:number;
+    outbreak:boolean;
 }
 const App = () => {
     const [settingsView, setSettingsView] = useState<boolean>(false)
@@ -16,34 +16,64 @@ const App = () => {
     const [width, setWidth] = useState<number>(9)
     const [outbreaks, setOutbreaks] = useState<number>(10)
     const [matrix, setMatrix] = useState<Cell[][]>([])
-    useEffect( () => {
-        return () => {
-            
-            setMatrix([])
+    useEffect( () => {           
+            const row:Cell[] = [];
+            let i:number
+            let j:number
+            const cell:Cell = {state:0,outbreak:false}
+            const mat:Cell[][] = []
+            for(j=0;j<width;j++){
+                row.push(cell)
+            }
+            for(i=0;i<heigth;i++){
+                mat.push(row)
+            }
+            const size:number = width * heigth
+            for(i=0;i<outbreaks;i++){
+                const cellOutbreak:number = Math.floor(Math.random() * size)
+                const row:number = Math.floor(cellOutbreak/(width)) 
+                if(cellOutbreak%(width) === 0 ){
+                     const column:number = width-1
+                     console.log("Celda: "+cellOutbreak);
+                
+                     console.log("row: "+row+" column: "+column);
+                     console.log(mat[row][column]);
+                }else{
+                     const column:number = cellOutbreak%(width)
+                     console.log("Celda: "+cellOutbreak);
+                
+                     console.log("row: "+row+" column: "+column);
+                     console.log(mat[row][column]);
+                }
+                
+                
+                //mat[row][column].outbreak ? i = i-1 :   mat[row][column].outbreak = true
+                
+                
+            }
 
+            setMatrix(mat)
             
-        }
+      
+        
+            
+
     }, [heigth,width,outbreaks])
-    useEffect(() => {
- 
-        return () => {
-
-            if(matrix.length === 0){
-                var i:number
-                var j:number
-                const row:Cell[] = [];
-                const cell:Cell = {state:0,outbreaks:0}
-                const mat:Cell[][] = [[]]
-                for(j=0;j<width;j++){
-                    row.push(cell)
-                }
-                for(i=0;i<heigth;i++){
-                   mat.push(row)
-                }
-                setMatrix(mat)
-            }  
+    /*useEffect(() => {
+        const size:number = width * heigth
+        let i:number
+        for(i=0;i<outbreaks;i++){
+            const cellOutbreak:number = Math.floor(Math.random() * size)
+            const row:number = Math.floor(cellOutbreak/(width+1))
+            const column:number = Math.floor(cellOutbreak%(width+1))
+            console.log("Celda: "+cellOutbreak);
+            
+            console.log("row: "+row+" column: "+column);
+            matrix[0][0].outbreak ? i=i-1: matrix[row][column].outbreak = true
+           
         }
-    }, [matrix])
+    }, [outbreaks])*/
+   
     return (
         <>
         <Scoreboard outbreaks={outbreaks}/>
